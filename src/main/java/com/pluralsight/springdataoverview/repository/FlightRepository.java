@@ -7,9 +7,14 @@ import java.util.List;
 
 public interface FlightRepository extends CrudRepository<Flight, Long> {
 
-    List<Flight> findByOrigin(String london);  // SELECT * FROM flight WHERE  origin= ?  ...parameter
+    List<Flight> findByOrigin(String origin);  // SELECT * FROM flight WHERE  origin= ?  ...parameter
 
     // SELECT * FROM flight WHERE origin = ? AND destination = ?
     List<Flight> findByOriginAndDestination(String origin, String destination);
 
+    //SELECT * FROM flight WHERE origin IN (?)
+    List<Flight> findByOriginIn(String ... origin);
+
+   //SELECT * FROM flight WHERE upper(origin) = UPPER(?)
+    List<Flight> findByOriginIgnoreCase(String origin);
 }
