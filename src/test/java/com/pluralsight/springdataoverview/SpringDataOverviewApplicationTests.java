@@ -42,6 +42,8 @@ class CrudTests {
 
 		flightRepository.deleteById(flight.getId());  //this deletes the flight
 
+		Assertions.assertThat(flightRepository.count()).isEqualTo(0); // checks if there is no more stored flight after deleting the on we created
+
 	}
 
 //	@Autowired
