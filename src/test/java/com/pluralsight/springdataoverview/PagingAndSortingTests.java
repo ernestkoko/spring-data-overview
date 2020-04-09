@@ -2,6 +2,7 @@ package com.pluralsight.springdataoverview;
 
 import com.pluralsight.springdataoverview.entity.Flight;
 import com.pluralsight.springdataoverview.repository.FlightRepository;
+import javassist.runtime.Desc;
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
@@ -108,26 +109,62 @@ public class PagingAndSortingTests {
 
     }
     //4th test.  paging  and sorting test
-//    @Test
-//    public void shouldPageAndSortResults(){
-//        for (int i = 0; i<50; i++){
-//            flightRepository.save(createFlight(String.valueOf(i)));
-//        }
-//
-//        //paging. grouping them into sections
-//        final Page<Flight> page = flightRepository.findAll(PageRequest.of(2,5));
-//
-//        Assertions.assertThat(page.getTotalElements()).isEqualTo(50); //checks if the total flights is 50
-//        Assertions.assertThat(page.getNumberOfElements()).isEqualTo(5);
-//        Assertions.assertThat(page.getTotalPages()).isEqualTo(10);
-//
-//        //test if the page content returns the correct elements
-//        Assertions.assertThat(page.getContent())
-//                .extracting(Flight::getDestination)
-//                .containsExactly("10","11","12","13","14");  //page 2 because we are requesting for page 2 above
-//
-//
-//    }
+    @Test
+    public void shouldPageAndSortResults(){
+        for (int i = 0; i<50; i++){
+            flightRepository.save(createFlight(String.valueOf(i)));
+        }
+
+        //paging. grouping them into sections
+        final Page<Flight> page = flightRepository
+                .findAll(PageRequest.of(2,5, Sort.by(Sort.Direction.DESC,"destination")));
+
+        Assertions.assertThat(page.getTotalElements()).isEqualTo(50); //checks if the total flights is 50
+        Assertions.assertThat(page.getNumberOfElements()).isEqualTo(5);
+        Assertions.assertThat(page.getTotalPages()).isEqualTo(10);
+
+        //test if the page content returns the correct elements
+        Assertions.assertThat(page.getContent())
+                .extracting(Flight::getDestination)
+                .containsExactly("44","43","42","41","40");  //page 2  from behind because we are requesting for page 2 behind  above
+
+
+    }
+    //4th test.  paging  and sorting test
+    @Test
+    public void shouldPageAndSortADerivedQuery(){
+        for (int i = 0; i<10; i++){
+            final Flight flight = createFlight(String.valueOf(i));
+            flight.setOrigin("paris");
+
+
+            flightRepository.save(flight);
+        }
+        for (int i = 0; i<10; i++){
+            final Flight flight = createFlight(String.valueOf(i));
+            flight.setOrigin("London");
+
+
+            flightRepository.save(flight);
+        }
+
+
+        //paging. grouping them into sections
+        final Page<Flight> page = flightRepository
+                .findByOringin("London",
+                        PageRequest.of(0,5, Sort.by(Sort.Direction.DESC,"destination")));
+
+        Assertions.assertThat(page.getTotalElements()).isEqualTo(10); //checks if the total flights is 10
+        Assertions.assertThat(page.getNumberOfElements()).isEqualTo(5);
+        Assertions.assertThat(page.getTotalPages()).isEqualTo(2);
+
+        //test if the page content returns the correct elements
+        Assertions.assertThat(page.getContent())
+                .extracting(Flight::getDestination)
+                .containsExactly("9","8","7","6","5");
+
+
+    }
 
     private Flight createFlight(String destination, LocalDateTime scheduledAt) {
         Flight flight  = new Flight();

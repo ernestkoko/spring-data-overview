@@ -1,6 +1,9 @@
 package com.pluralsight.springdataoverview.repository;
 
 import com.pluralsight.springdataoverview.entity.Flight;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
@@ -20,4 +23,6 @@ public interface FlightRepository extends PagingAndSortingRepository<Flight, Lon
 
    //SELECT * FROM flight WHERE upper(origin) = UPPER(?)
     List<Flight> findByOriginIgnoreCase(String origin);
+
+    Page<Flight> findByOringin(String origin, Pageable pageRequest);
 }
