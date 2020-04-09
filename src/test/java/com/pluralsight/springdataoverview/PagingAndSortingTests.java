@@ -108,26 +108,26 @@ public class PagingAndSortingTests {
 
     }
     //4th test.  paging  and sorting test
-    @Test
-    public void shouldPageAndSortResults(){
-        for (int i = 0; i<50; i++){
-            flightRepository.save(createFlight(String.valueOf(i)));
-        }
-
-        //paging. grouping them into sections
-        final Page<Flight> page = flightRepository.findAll(PageRequest.of(2,5));
-
-        Assertions.assertThat(page.getTotalElements()).isEqualTo(50); //checks if the total flights is 50
-        Assertions.assertThat(page.getNumberOfElements()).isEqualTo(5);
-        Assertions.assertThat(page.getTotalPages()).isEqualTo(10);
-
-        //test if the page content returns the correct elements
-        Assertions.assertThat(page.getContent())
-                .extracting(Flight::getDestination)
-                .containsExactly("10","11","12","13","14");  //page 2 because we are requesting for page 2 above
-
-
-    }
+//    @Test
+//    public void shouldPageAndSortResults(){
+//        for (int i = 0; i<50; i++){
+//            flightRepository.save(createFlight(String.valueOf(i)));
+//        }
+//
+//        //paging. grouping them into sections
+//        final Page<Flight> page = flightRepository.findAll(PageRequest.of(2,5));
+//
+//        Assertions.assertThat(page.getTotalElements()).isEqualTo(50); //checks if the total flights is 50
+//        Assertions.assertThat(page.getNumberOfElements()).isEqualTo(5);
+//        Assertions.assertThat(page.getTotalPages()).isEqualTo(10);
+//
+//        //test if the page content returns the correct elements
+//        Assertions.assertThat(page.getContent())
+//                .extracting(Flight::getDestination)
+//                .containsExactly("10","11","12","13","14");  //page 2 because we are requesting for page 2 above
+//
+//
+//    }
 
     private Flight createFlight(String destination, LocalDateTime scheduledAt) {
         Flight flight  = new Flight();
