@@ -151,7 +151,7 @@ public class PagingAndSortingTests {
 
         //paging. grouping them into sections
         final Page<Flight> page = flightRepository
-                .findByOringin("London",
+                .findByOrigin("London",
                         PageRequest.of(0,5, Sort.by(Sort.Direction.DESC,"destination")));
 
         Assertions.assertThat(page.getTotalElements()).isEqualTo(10); //checks if the total flights is 10

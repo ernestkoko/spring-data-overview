@@ -24,5 +24,5 @@ public interface FlightRepository extends PagingAndSortingRepository<Flight, Lon
    //SELECT * FROM flight WHERE upper(origin) = UPPER(?)
     List<Flight> findByOriginIgnoreCase(String origin);
 
-    Page<Flight> findByOringin(String origin, Pageable pageRequest);
+    Page<Flight> findByOrigin(String origin, Pageable pageRequest);
 }
