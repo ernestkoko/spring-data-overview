@@ -12,7 +12,7 @@ import java.util.List;
 //Paging and sorting helps share the db into different sets/pages for queries not to overload the app
 //PagingAndSortingRepository takes Flight and the Flight id type(String)
 
-public interface FlightRepository extends PagingAndSortingRepository<Flight, String> {
+public interface FlightRepository extends PagingAndSortingRepository<Flight, String>, DeleteByOriginRepository {
 
     List<Flight> findByOrigin(String origin);  // SELECT * FROM flight WHERE  origin= ?  ...parameter
 
@@ -26,4 +26,6 @@ public interface FlightRepository extends PagingAndSortingRepository<Flight, Str
     List<Flight> findByOriginIgnoreCase(String origin);
 
     Page<Flight> findByOrigin(String origin, Pageable pageRequest);
+
+
 }
