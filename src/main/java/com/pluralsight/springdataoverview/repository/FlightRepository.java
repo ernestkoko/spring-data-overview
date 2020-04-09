@@ -10,8 +10,9 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import java.util.List;
 
 //Paging and sorting helps share the db into different sets/pages for queries not to overload the app
+//PagingAndSortingRepository takes Flight and the Flight id type(String)
 
-public interface FlightRepository extends PagingAndSortingRepository<Flight, Long> {
+public interface FlightRepository extends PagingAndSortingRepository<Flight, String> {
 
     List<Flight> findByOrigin(String origin);  // SELECT * FROM flight WHERE  origin= ?  ...parameter
 

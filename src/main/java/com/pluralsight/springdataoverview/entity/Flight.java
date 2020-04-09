@@ -1,29 +1,26 @@
 package com.pluralsight.springdataoverview.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
-@Entity    //@Entity means it is a DB table
+
 public class Flight {
 
 
-    @Id
-    @GeneratedValue
-    private Long id;
+
+    private String id;
     private String origin;
     private String destination;
     private LocalDateTime scheduledAt;
 
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
