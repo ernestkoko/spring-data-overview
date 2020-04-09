@@ -2,10 +2,13 @@ package com.pluralsight.springdataoverview.repository;
 
 import com.pluralsight.springdataoverview.entity.Flight;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.List;
 
-public interface FlightRepository extends CrudRepository<Flight, Long> {
+//Paging and sorting helps share the db into different sets/pages for queries not to overload the app
+
+public interface FlightRepository extends PagingAndSortingRepository<Flight, Long> {
 
     List<Flight> findByOrigin(String origin);  // SELECT * FROM flight WHERE  origin= ?  ...parameter
 
